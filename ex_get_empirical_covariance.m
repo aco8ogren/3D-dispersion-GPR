@@ -8,12 +8,13 @@ covariance_options = struct();
 covariance_options.eig_idxs = [1];
 covariance_options.isComputeCovarianceGradient = false;
 
-data = load("C:\Users\alex\OneDrive - California Institute of Technology\Documents\Graduate\Research\3D-dispersion-comsol\OUTPUT\IBZ output 16-May-2023 17-15-12\checkpoint38.mat");
+% data = load("C:\Users\alex\OneDrive - California Institute of Technology\Documents\Graduate\Research\3D-dispersion-comsol\OUTPUT\IBZ output 16-May-2023 17-15-12\checkpoint38.mat");
+data = load("C:\Users\alex\OneDrive - California Institute of Technology\Documents\Graduate\Research\3D-dispersion-comsol\OUTPUT\output 18-May-2023 18-16-56\checkpoint152 - Copy.mat");
 
 WAVEVECTOR_DATA = data.WAVEVECTOR_DATA;
 EIGENVALUE_DATA = data.EIGENVALUE_DATA;
 
-[Cs,~,kfcns,~,Vs,~,~,~,X_grid_vec,Y_grid_vec,covariance_info] = get_empirical_covariance(WAVEVECTOR_DATA,EIGENVALUE_DATA,covariance_options);
+[Cs,~,kfcns,~,Vs,~,~,~,X_grid_vec,Y_grid_vec,Z_grid_vec,covariance_info] = get_empirical_covariance(WAVEVECTOR_DATA,EIGENVALUE_DATA,covariance_options);
 
 figure
 imagesc(reshape(Cs{1},[prod(data.c.N_wv) prod(data.c.N_wv)]))
@@ -24,7 +25,7 @@ axis_pairs = combvec(idxs,idxs);
 axis_pairs(:,axis_pairs(1,:)==axis_pairs(2,:)) = [];
 
 fig = figure;
-tlo = tiledlayout('flow')
+tlo = tiledlayout('flow');
 
 C = Cs{1};
 for i = 1:size(axis_pairs,2)
@@ -37,12 +38,12 @@ for i = 1:size(axis_pairs,2)
     end
     temp = squeeze(C(indices{:}));
     
+    nexttile
     imagesc(temp)
     colorbar
-    nexttile
-    title(axis_pairs(:,i)')
-    xlabel(['axis ' num2str(min(axis_pairs(:,i))])
-    ylabel(['axis ' num2str(max(axis_pairs(:,i))])
+    % title(axis_pairs(:,i)')
+    xlabel(['axis ' num2str(max(axis_pairs(:,i)))])
+    ylabel(['axis ' num2str(min(axis_pairs(:,i)))])
 end
 
-
+title(tlo,'Examining the smoothness of the 6D covariance array along each pair of slice directions')

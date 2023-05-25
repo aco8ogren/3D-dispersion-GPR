@@ -1,0 +1,16 @@
+clear; close all;
+
+% This script shows how I can reorder data that I've previously generated
+% using meshgrid ordering to make it follow ndgrid ordering.
+
+N = 3;
+
+for i = 1:3
+    grid_vecs{i} = linspace(0,1,N);
+end
+
+[X,Y,Z] = meshgrid(grid_vecs{:});
+
+meshgrid_data = [X(:) Y(:) Z(:)];
+
+[X,Y,Z] = ndgrid(grid_vecs{:});

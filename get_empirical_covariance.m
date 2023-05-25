@@ -1,4 +1,4 @@
-function [Cs,C_grads,kfcns,kfcn_grads,Vs,V_grads,vfcns,vfcn_grads,X_grid_vec,Y_grid_vec,covariance_info] = get_empirical_covariance(WAVEVECTOR_DATA,EIGENVALUE_DATA,covariance_options)
+function [Cs,C_grads,kfcns,kfcn_grads,Vs,V_grads,vfcns,vfcn_grads,X_grid_vec,Y_grid_vec,Z_grid_vec,covariance_info] = get_empirical_covariance(WAVEVECTOR_DATA,EIGENVALUE_DATA,covariance_options)
     variance_options.isComputeVarianceGradient = false; % HARD CODED
     
     [~,~,N_struct] = size(EIGENVALUE_DATA);
@@ -7,9 +7,9 @@ function [Cs,C_grads,kfcns,kfcn_grads,Vs,V_grads,vfcns,vfcn_grads,X_grid_vec,Y_g
     Y_grid_vec = unique(sort(WAVEVECTOR_DATA(:,2)));
     Z_grid_vec = unique(sort(WAVEVECTOR_DATA(:,3)));
     
-    h_x = X_grid_vec(2) - X_grid_vec(1);
-    h_y = Y_grid_vec(2) - Y_grid_vec(1);
-    h_z = Z_grid_vec(2) - Z_grid_vec(1);
+    % h_x = X_grid_vec(2) - X_grid_vec(1);
+    % h_y = Y_grid_vec(2) - Y_grid_vec(1);
+    % h_z = Z_grid_vec(2) - Z_grid_vec(1);
     
     N_wv(1) = length(X_grid_vec);
     N_wv(2) = length(Y_grid_vec);
