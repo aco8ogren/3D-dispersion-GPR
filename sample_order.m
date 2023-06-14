@@ -1,9 +1,10 @@
 clear; close all;
 
 warning('off','MATLAB:nearlySingularMatrix');
+addpath('../3D-dispersion-comsol')
 
 % data_path_train = "C:\Users\alex\OneDrive - California Institute of Technology\Documents\Graduate\Research\3D-dispersion-comsol\OUTPUT\full BZ output 18-May-2023 18-16-56\checkpoint152 - Copy.mat";
-data_path_train = "C:\Users\alex\OneDrive - California Institute of Technology\Documents\Graduate\Research\3D-dispersion-comsol\OUTPUT\full BZ output 18-May-2023 18-16-56\checkpoint233_ndgrid.mat";
+data_path_train = "C:\Users\alex\OneDrive - California Institute of Technology\Documents\Graduate\Research\3D-dispersion-comsol\OUTPUT\IBZ output 18-May-2023 18-16-56\checkpoint233_ndgrid.mat";
 
 N_sample = 20;
 disp_idxs = 'all'; % typically set to 'all';
@@ -11,8 +12,8 @@ disp_idxs = 'all'; % typically set to 'all';
 sigma = 0;
 rcond_tol = 1e-16;
 
-isPause = true;
-isPlot = true;
+isPause = false;
+isPlot = false;
 
 disp('Loading training set...')
 % [WAVEVECTOR_DATA,EIGENVALUE_DATA] = load_dispersion_dataset(data_path_train);
@@ -39,8 +40,8 @@ N_wv_train(3) = numel(unique(WAVEVECTOR_DATA(:,3)));
 
 covariance_options.isComputeCovarianceGradient = false;
 covariance_options.isAllowGPU = false;
-% eig_idxs = 1:data.const.N_eig;
-eig_idxs = 1;
+eig_idxs = 1:data.c.N_eig;
+% eig_idxs = 1;
 
 [X_e,Y_e,Z_e] = ndgrid(linspace(-pi,pi,N_evaluate(1)),linspace(-pi,pi,N_evaluate(2)),linspace(0,pi,N_evaluate(3)));
 wv_e = [reshape(X_e,[],1) reshape(Y_e,[],1) reshape(Z_e,[],1)];
